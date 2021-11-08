@@ -40,7 +40,7 @@ public class RatespielRefactured {
 				if (autosolve) {
 					eingabe = solve(zuHoch, eingabe, versucheZaehler, minBorder, maxBorder);
 				} else {
-					eingabe = frame.findInt();
+					eingabe = frame.findIntWithoutNewWindow();
 				}
 
 				frame.appendHistory(Integer.toString((int) eingabe));
@@ -81,7 +81,7 @@ public class RatespielRefactured {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					frame.appendHistory("Ich bin nicht entäuscht,...");
+					frame.appendHistory("Ich bin nicht entï¿½uscht,...");
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
@@ -99,10 +99,10 @@ public class RatespielRefactured {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					frame.appendHistory("Ich hätte mehr von dir erwartet.");
+					frame.appendHistory("Ich hï¿½tte mehr von dir erwartet.");
 				}
 			} else {
-				frame.appendHistory(" um die Lösung zu finden.");
+				frame.appendHistory(" um die Lï¿½sung zu finden.");
 				frame.appendHistory(" " + neededTime + " Sekunden gebraucht ");
 				frame.appendHistory(" Es hat " + versucheZaehler + " Versuche und ");
 			}
@@ -112,7 +112,7 @@ public class RatespielRefactured {
 			if (askYesNo(frame, "Spiel beenden?(y/N)")) {
 
 				// decide to end game or new init
-				if (askYesNo(frame, "Zahlengrenzen ändern?(y/N)")) {
+				if (askYesNo(frame, "Zahlengrenzen ï¿½ndern?(y/N)")) {
 
 					autosolve = askYesNo(frame, "Autosolver aktivieren?(y/N)");
 					maxBorder = requestInt(frame, "Was soll die Obergrenze sein?");
@@ -155,19 +155,17 @@ public class RatespielRefactured {
 		return ausgabe;
 	}
 
-	private static String requestString(RatespielFrame frame, String request) {
-		frame.setRequestText(request);
-		String returnString = "";
-		while (returnString.isEmpty()) {
-			returnString = frame.findString();
-		}
-		return returnString;
-	}
+	/*
+	 * private static String requestString(RatespielFrame frame, String request) {
+	 * frame.setRequestText(request); String returnString = ""; while
+	 * (returnString.isEmpty()) { returnString = frame.findString(request); } return
+	 * returnString; }
+	 */
 
 	/*
 	 * private static String hintString(RatespielFrame frame, String request) {
 	 * frame.setHintText(request); String returnString = ""; while
-	 * (returnString.isEmpty()) { returnString = frame.findString(); } return
+	 * (returnString.isEmpty()) { returnString = frame.findString(request); } return
 	 * returnString; }
 	 */
 
@@ -175,7 +173,7 @@ public class RatespielRefactured {
 		frame.setRequestText(request);
 		int returnInt = Integer.MAX_VALUE;
 		while (returnInt == Integer.MAX_VALUE) {
-			returnInt = frame.findInt();
+			returnInt = frame.findInt(request);
 		}
 		return returnInt;
 	}
@@ -183,17 +181,11 @@ public class RatespielRefactured {
 	/*
 	 * private static int hintInt(RatespielFrame frame, String request) {
 	 * frame.setHintText(request); int returnInt = Integer.MAX_VALUE; while
-	 * (returnInt == Integer.MAX_VALUE) { returnInt = frame.findInt(); } return
+	 * (returnInt == Integer.MAX_VALUE) { returnInt = frame.findInt(request); } return
 	 * returnInt; }
 	 */
 
 	private static boolean askYesNo(RatespielFrame frame, String request) {
-
-		String yNString = "";
-		while (!(yNString.equalsIgnoreCase("y") || yNString.equalsIgnoreCase("n"))) {
-			yNString = requestString(frame, request);
-		}
-
-		return yNString.equalsIgnoreCase("y");
+		return frame.findBoolean(request);
 	}
 }

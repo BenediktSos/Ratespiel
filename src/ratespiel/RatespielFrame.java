@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class RatespielFrame {
@@ -65,8 +66,45 @@ public class RatespielFrame {
 		mainWindow.setVisible(true);
 	}
 
-	public int findInt() {
+	public int findInt(String request) {
+		// New Window
+		readInput = JOptionPane.showInputDialog(null, request);
+
+		// get input from 'input' JTextfield
+
+		Scanner scanner = new Scanner(readInput);
+
+		if (readInput != null) {
+			// try not to crash without integer input
+			try {
+				return scanner.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("Unintended Input: \"!int\"");
+				System.out.println("\t" + e);
+				return Integer.MAX_VALUE;
+			}
+
+		} else {
+			return Integer.MAX_VALUE;
+		}
+	}
+
+	public String findString(String request) {
+		// New Window
+		readInput = JOptionPane.showInputDialog(null, request);
+
+		// get input from 'input' JTextfield
+		if (readInput != null) {
+			return Character.toString(readInput.toCharArray()[0]);
+		} else {
+			return "";
+		}
+	}
+
+	public int findIntWithoutNewWindow() {
+
 		// wait for 'Enter'
+
 		try {
 			semaphore.acquire();
 		} catch (InterruptedException e) {
@@ -92,7 +130,7 @@ public class RatespielFrame {
 		}
 	}
 
-	public String findString() {
+	public String findStringWithoutNewWindow() {
 		// wait for 'Enter'
 		try {
 			semaphore.acquire();
@@ -106,6 +144,11 @@ public class RatespielFrame {
 		} else {
 			return "";
 		}
+	}
+
+	public boolean findBoolean(String request) {
+		int boolAsInt = JOptionPane.showConfirmDialog(null, request, "Ratespiel", 0);
+		return (boolAsInt == 0);
 	}
 
 	public void setRequestText(String text) {
